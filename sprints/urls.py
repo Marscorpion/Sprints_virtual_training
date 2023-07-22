@@ -23,11 +23,11 @@ from rest_framework import permissions
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="API Documentation",
+        title="Mountains API",
         default_version="v1",
-        description="Your API description",
-        terms_of_service="https://www.example.com/terms/",
-        contact=openapi.Contact(email="contact@example.com"),
+        description="This API provides access to data and services for our project",
+        terms_of_service="",  # Здесь может быть ссылка на условия использования (пустая строка в данном случае)
+        contact=openapi.Contact(email="contact@example.com"),  # Здесь указывается контактный email
         license=openapi.License(name="BSD License"),
     ),
     public=True,
