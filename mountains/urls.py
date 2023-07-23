@@ -1,7 +1,7 @@
 from django.urls import include, path
 from rest_framework import routers
 from . import views
-from .views import CoordinateViewSet, ImageViewSet, UserViewSet, PassViewSet
+from .views import CoordinateViewSet, ImageViewSet, UserViewSet, PassViewSet, submitData
 
 router = routers.DefaultRouter()
 router.register(r'coordinates', views.CoordinateViewSet)

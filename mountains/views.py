@@ -102,7 +102,7 @@ class PassViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         return super().destroy(request, *args, **kwargs)
 
-@swagger_auto_schema(operation_description="Submit data")
+@swagger_auto_schema(method='POST', operation_description="Submit data")
 @api_view(['POST'])
 def submitData(request):
     data = request.data
@@ -179,6 +179,7 @@ def submitData(request):
         # Установка значения поля status в "new"
         pass_object.status = "new"
         pass_object.save()
+        print(f"New pass object created with status: {pass_object.status}")
 
         return Response({'status': 200, 'message': 'Data submitted successfully', 'id': pass_object.id})
 
