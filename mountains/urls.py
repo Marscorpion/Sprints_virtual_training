@@ -12,4 +12,7 @@ router.register(r'passes', views.PassViewSet)
 urlpatterns = [
     path('api/', include(router.urls)),
     path('api/submit-data/', views.submitData, name='submit-data'),
+    path('api/submit-data/<int:id>/', views.get_pass_by_id, name='get-pass-by-id'),
+    path('api/submit-data/<int:id>/', views.editData, name='edit-data'),
+    path('api/submit-data/', views.getPassesByUserEmail, name='get-passes-by-user-email'),
 ]

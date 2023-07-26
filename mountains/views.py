@@ -185,9 +185,49 @@ def submitData(request):
 
     except (ValidationError, Exception) as e:
         return Response({'status': 500, 'message': str(e), 'id': None})
+@swagger_auto_schema(method='GET')
+@api_view(['GET'])
+def get_pass_by_id(request, id):
+    try:
+        # Получение объекта перевала по его id
+        pass_object = Pass.objects.get(id=id)
+        serializer = PassSerializer(pass_object)
+        return Response(serializer.data)
+    except Pass.DoesNotExist:
+        return Response({'status': 404, 'message': 'Pass not found', 'id': None})
 
+@swagger_auto_schema(method='PATCH')
+@api_view(['PATCH'])
+def editData(request, id):
+    try:
+        # Проверяем, существует ли объект с указанным id
+        pass_object = Pass.objects.get(pk=id)
 
+        # Проверяем, что объект находится в статусе "new"
+        if pass_object.status != "new":
+            return Response({'state': 0, 'message': 'The pass cannot be edited as it is not in "new" status.'})
 
+        # Проверяем, что переданные данные валидны
+        pass_serializer = PassSerializer(data=request.data, instance=pass_object, partial=True)
+        if not pass_serializer.is_valid():
+            return Response({'state': 0, 'message': 'Invalid pass data', 'errors': pass_serializer.errors})
 
+        # Сохраняем отредактированные данные
+        pass_serializer.save()
 
+        return Response({'state': 1, 'message': 'Pass data updated successfully'})
+
+    except Pass.DoesNotExist:
+        return Response({'state': 0, 'message': 'Pass object not found'})
+@swagger_auto_schema(method='GET')
+@api_view(['GET'])
+def getPassesByUserEmail(request):
+    email = request.GET.get('user__email')
+    if not email:
+        return Response({'message': 'Email parameter is required.'}, status=400)
+
+    passes = Pass.objects.filter(user__email=email)
+    pass_serializer = PassSerializer(passes, many=True)
+
+    return Response(pass_serializer.data)
 
