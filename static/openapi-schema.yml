@@ -135,6 +135,47 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Pass'
+  /api/submit-data/:
+    post:
+      summary: Submit data about a pass
+      operationId: submitData
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pass'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pass'
+  /api/submit-data/{id}/: # Добавленная операция PATCH
+    patch: # Тип операции PATCH
+      summary: Update data about a pass
+      operationId: editData     # Идентификатор операции (если есть)
+      parameters:
+        - name: id              # Параметр пути ID
+          in: path
+          required: true
+          description: ID of the pass to update
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pass'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pass'
 
 components:
   schemas:
